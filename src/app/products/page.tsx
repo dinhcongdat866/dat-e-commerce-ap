@@ -73,7 +73,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     }
 }));
 
-const ProductCard = styled(Card)(({ theme }) => ({
+const ProductCard = styled(Card)(() => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -131,7 +131,8 @@ const ProductsPage = () => {
         }
     ];
 
-    const handleCartClick = (event: any) => {
+    // @ts-expect-error: Type mismatch due to event target
+    const handleCartClick = (event) => {
         setCartAnchorEl(event.currentTarget);
     };
 
