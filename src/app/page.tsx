@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   IconButton,
-  Badge,
   Container,
   Grid,
   Card,
@@ -14,25 +11,21 @@ import {
   CardContent,
   Box,
   Button,
-  TextField,
-  InputAdornment,
   Stack,
   Paper,
   List,
   ListItem,
-  ListItemText
+  Link,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { 
   ShoppingCart as ShoppingCartIcon,
-  Search as SearchIcon,
-  Favorite as FavoriteIcon,
-  Person as PersonIcon,
   Facebook as FacebookIcon,
   Twitter as TwitterIcon,
   Instagram as InstagramIcon,
   ChevronRight as ChevronRightIcon
 } from "@mui/icons-material";
+import { useNavigation } from "@/utils/useNavigation";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   minWidth: 280,
@@ -74,7 +67,7 @@ const ScrollButton = styled(IconButton)(() => ({
 }));
 
 const HomePage = () => {
-  const [cartItems] = useState(3);
+  const { navigateToProducts, navigateToHome, navigateToContacts} = useNavigation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3;
 
@@ -129,41 +122,6 @@ const HomePage = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            E-Shop
-          </Typography>
-          <TextField
-            size="small"
-            placeholder="Search products..."
-            sx={{ mr: 2, backgroundColor: "white", borderRadius: 1, width: "300px" }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end">
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <Stack direction="row" spacing={2}>
-            <IconButton color="inherit">
-              <PersonIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge badgeContent={cartItems} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-
       <Box
         sx={{
           backgroundImage: `url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da")`,
@@ -182,7 +140,7 @@ const HomePage = () => {
             <Typography variant="h6" sx={{ mb: 3 }}>
               Check out the latest products with amazing deals
             </Typography>
-            <Button variant="contained" size="large">
+            <Button variant="contained" size="large" onClick={navigateToProducts}>
               Shop Now
             </Button>
           </Paper>
@@ -243,13 +201,19 @@ const HomePage = () => {
               </Typography>
               <List>
                 <ListItem disablePadding>
-                  <ListItemText primary="Home" />
+                  <Link component="button" onClick={navigateToHome} sx={{ paddingY: 1 }}>
+                    Home
+                  </Link>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemText primary="Products" />
+                  <Link component="button" onClick={navigateToProducts} sx={{ paddingY: 1 }}>
+                    Products
+                  </Link>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemText primary="Contact" />
+                  <Link component="button" onClick={navigateToContacts} sx={{ paddingY: 1 }}>
+                    Contact
+                  </Link>
                 </ListItem>
               </List>
             </Grid>

@@ -166,3 +166,13 @@ a.secondary {
     filter: invert();
   }
 }
+
+.navLink {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s;
+}
+
+.navLink:hover {
+  color: #0070f3; /* Change to your desired hover color */
+}

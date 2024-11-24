@@ -24,6 +24,7 @@ import {
     Add as AddIcon, 
     Delete as DeleteIcon 
 } from '@mui/icons-material';
+import { useNavigation } from "@/utils/useNavigation";
 
 const ProductImage = styled(CardMedia)(({ theme }) => ({
   height: 120,
@@ -40,6 +41,7 @@ const CartItemCard = styled(Card)(({ theme }) => ({
 }));
 
 const ShoppingCartPage = () => {
+  const { navigateToHome } = useNavigation();
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -90,19 +92,6 @@ const ShoppingCartPage = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            E-Shop
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={cartItems.length} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
       <Container sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" gutterBottom>
           Shopping Cart
