@@ -83,11 +83,6 @@ const ProductsPage = () => {
         }
     ];
 
-    // @ts-expect-error: Type mismatch due to event target
-    const handleCartClick = (event) => {
-        setCartAnchorEl(event.currentTarget);
-    };
-
     const handleCartClose = () => {
         setCartAnchorEl(null);
     };

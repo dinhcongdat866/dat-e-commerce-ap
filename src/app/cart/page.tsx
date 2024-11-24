@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   IconButton,
-  Badge,
   Container,
   Grid,
   Card,
@@ -19,12 +16,10 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { 
-    ShoppingCart as ShoppingCartIcon, 
     Remove as RemoveIcon, 
     Add as AddIcon, 
     Delete as DeleteIcon 
 } from '@mui/icons-material';
-import { useNavigation } from "@/utils/useNavigation";
 
 const ProductImage = styled(CardMedia)(({ theme }) => ({
   height: 120,
@@ -41,7 +36,6 @@ const CartItemCard = styled(Card)(({ theme }) => ({
 }));
 
 const ShoppingCartPage = () => {
-  const { navigateToHome } = useNavigation();
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
