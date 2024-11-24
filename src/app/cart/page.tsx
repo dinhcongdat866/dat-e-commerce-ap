@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Typography,
   IconButton,
@@ -20,6 +20,9 @@ import {
     Add as AddIcon, 
     Delete as DeleteIcon 
 } from '@mui/icons-material';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { removeItem, updateQuantity } from "@/store/cartSlice";
 
 const ProductImage = styled(CardMedia)(({ theme }) => ({
   height: 120,
@@ -35,49 +38,20 @@ const CartItemCard = styled(Card)(({ theme }) => ({
   alignItems: "center"
 }));
 
-const ShoppingCartPage = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Premium Wireless Headphones",
-      price: 299.99,
-      quantity: 1,
-      image: "images.unsplash.com/photo-1505740420928-5e560c06d30e"
-    },
-    {
-      id: 2,
-      name: "Smart Fitness Watch",
-      price: 199.99,
-      quantity: 2,
-      image: "images.unsplash.com/photo-1523275335684-37898b6baf30"
-    },
-    {
-      id: 3,
-      name: "Bluetooth Speaker",
-      price: 89.99,
-      quantity: 1,
-      image: "images.unsplash.com/photo-1608043152269-423dbba4e7e1"
-    }
-  ]);
+const CartPage = () => {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
 
   const handleQuantityChange = (id: number, action: string) => {
-    setCartItems(prevItems =>
-      prevItems.map(item => {
-        if (item.id === id) {
-          return {
-            ...item,
-            quantity: action === "increase" 
-              ? item.quantity + 1
-              : Math.max(1, item.quantity - 1)
-          };
-        }
-        return item;
-      })
-    );
+    const item = cartItems.find(item => item.id === id);
+    if (item) {
+      const newQuantity = action === "increase" ? item.quantity + 1 : Math.max(1, item.quantity - 1);
+      dispatch(updateQuantity({ id, quantity: newQuantity }));
+    }
   };
 
   const handleRemoveItem = (id: number) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+    dispatch(removeItem(id));
   };
 
   const calculateTotal = () => {
@@ -177,4 +151,4 @@ const ShoppingCartPage = () => {
   );
 };
 
-export default ShoppingCartPage;
+export default CartPage;

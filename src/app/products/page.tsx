@@ -26,6 +26,10 @@ import {
     Instagram as InstagramIcon
 } from "@mui/icons-material";
 import { useNavigation } from "@/utils/useNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { Product, toggleFavorite } from "@/store/productsSlice";
+import { addItem } from "@/store/cartSlice";
 
 const ProductCard = styled(Card)(() => ({
     height: "100%",
@@ -50,38 +54,16 @@ const ProductsPage = () => {
     const theme = useTheme();
     const [cartAnchorEl, setCartAnchorEl] = useState(null);
 
-    const products = [
-        {
-            id: 1,
-            name: "Premium Headphones",
-            price: "$299",
-            image: "images.unsplash.com/photo-1505740420928-5e560c06d30e"
-        },
-        {
-            id: 2,
-            name: "Smart Watch",
-            price: "$199",
-            image: "images.unsplash.com/photo-1523275335684-37898b6baf30"
-        },
-        {
-            id: 3,
-            name: "Wireless Earbuds",
-            price: "$149",
-            image: "images.unsplash.com/photo-1572569511254-d8f925fe2cbb"
-        },
-        {
-            id: 4,
-            name: "Digital Camera",
-            price: "$599",
-            image: "images.unsplash.com/photo-1516035069371-29a1b244cc32"
-        },
-        {
-            id: 5,
-            name: "Digital Camera",
-            price: "$599",
-            image: "images.unsplash.com/photo-1516035069371-29a1b244cc32"
-        }
-    ];
+    const products = useSelector((state: RootState) => state.products.items);
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (product: Product) => {
+        dispatch(addItem(product));
+    };
+
+    const handleAddToFavorites = (product: Product) => {
+        dispatch(toggleFavorite(product.id));
+    };
 
     const handleCartClose = () => {
         setCartAnchorEl(null);
@@ -125,15 +107,15 @@ const ProductsPage = () => {
                                             {product.name}
                                         </Typography>
                                         <Typography variant="h6" color="primary">
-                                            {product.price}
+                                            ${product.price}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" variant="contained" fullWidth>
+                                        <Button size="small" variant="contained" fullWidth onClick={() => handleAddToCart(product)}>
                                             Add to Cart
                                         </Button>
-                                        <IconButton size="small" aria-label="add to favorites">
-                                            <FavoriteIcon />
+                                        <IconButton size="small" aria-label="add to favorites" onClick={() => handleAddToFavorites(product)}>
+                                            <FavoriteIcon color={product.isFavorite ? "success" : "disabled"} />
                                         </IconButton>
                                     </CardActions>
                                 </ProductCard>

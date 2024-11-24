@@ -6,16 +6,15 @@ import { Menu as MenuIcon, Search as SearchIcon, ShoppingCart as ShoppingCartIco
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useNavigation } from '@/utils/useNavigation';
 import { styled } from '@mui/system';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
-interface NavBarProps {
-    cartItems: number;
-}
-
-const NavBar = ({ cartItems }: NavBarProps) => {
+const NavBar = () => {
     const { navigateToHome, navigateToProducts, navigateToCategories, navigateToCart } = useNavigation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const cartItems = useSelector((state: RootState) => state.cart.items.length);
 
     const Search = styled("div")(({ theme }) => ({
         position: "relative",

@@ -26,6 +26,10 @@ import {
   ChevronRight as ChevronRightIcon
 } from "@mui/icons-material";
 import { useNavigation } from "@/utils/useNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { Product } from "@/store/productsSlice";
+import { addItem } from "@/store/cartSlice";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   minWidth: 280,
@@ -68,57 +72,24 @@ const ScrollButton = styled(IconButton)(() => ({
 
 const HomePage = () => {
   const { navigateToProducts, navigateToHome, navigateToContacts} = useNavigation();
+  const dispatch = useDispatch();
+  const products = useSelector((state: RootState) => state.products.items);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3;
 
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Premium Wireless Headphones",
-      price: "$299.99",
-      image: "images.unsplash.com/photo-1505740420928-5e560c06d30e"
-    },
-    {
-      id: 2,
-      name: "Smart Watch Series 5",
-      price: "$399.99",
-      image: "images.unsplash.com/photo-1546868871-7041f2a55e12"
-    },
-    {
-      id: 3,
-      name: "Professional Camera",
-      price: "$899.99",
-      image: "images.unsplash.com/photo-1516035069371-29a1b244cc32"
-    },
-    {
-      id: 4,
-      name: "Wireless Earbuds",
-      price: "$159.99",
-      image: "images.unsplash.com/photo-1572569511254-d8f925fe2cbb"
-    },
-    {
-      id: 5,
-      name: "Smart Speaker",
-      price: "$199.99",
-      image: "images.unsplash.com/photo-1545454675-3531b543be5d"
-    },
-    {
-      id: 6,
-      name: "Laptop Pro",
-      price: "$1299.99",
-      image: "images.unsplash.com/photo-1496181133206-80ce9b88a853"
-    }
-  ];
-
   const handleNext = () => {
-    if (currentIndex + itemsPerPage < featuredProducts.length) {
+    if (currentIndex + itemsPerPage < products.length) {
       setCurrentIndex(currentIndex + itemsPerPage);
     } else {
       setCurrentIndex(0);
     }
   };
 
-  const visibleProducts = featuredProducts.slice(currentIndex, currentIndex + itemsPerPage);
+  const onAddToCart = (product: Product) => {
+    dispatch(addItem(product));
+  };
+
+  const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -164,13 +135,14 @@ const HomePage = () => {
                     {product.name}
                   </Typography>
                   <Typography variant="h6" color="primary">
-                    {product.price}
+                    ${product.price}
                   </Typography>
                   <Button
                     variant="contained"
                     fullWidth
                     sx={{ mt: 2 }}
                     startIcon={<ShoppingCartIcon />}
+                    onClick={() => onAddToCart(product)}
                   >
                     Add to Cart
                   </Button>
