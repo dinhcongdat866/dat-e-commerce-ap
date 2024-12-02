@@ -23,11 +23,21 @@ export const useNavigation = () => {
         router.push('/contacts');
     }
 
+    const navigateToCheckout = () => {
+        router.push('/checkout');
+    }
+
+    const navigateToProfile = () => {
+        router.push('/user');
+    }
+
     return {
         navigateToProducts,
         navigateToCart,
         navigateToHome,
         navigateToCategories,
-        navigateToContacts
+        navigateToContacts,
+        navigateToCheckout,
+        navigateToProfile
     }
 }

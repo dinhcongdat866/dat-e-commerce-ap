@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 const NavBar = () => {
-    const { navigateToHome, navigateToProducts, navigateToCategories, navigateToCart } = useNavigation();
+    const { navigateToHome, navigateToProducts, navigateToCategories, navigateToCart, navigateToProfile } = useNavigation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -90,7 +90,7 @@ const NavBar = () => {
                         <ShoppingCartIcon />
                     </Badge>
                 </IconButton>
-                <IconButton color="inherit" aria-label="profile">
+                <IconButton color="inherit" aria-label="profile" onClick={navigateToProfile}>
                     <AccountCircleIcon />
                 </IconButton>
             </Toolbar>
@@ -103,7 +103,7 @@ const NavBar = () => {
             onClose={() => setMobileMenuOpen(false)}
             >
                 <List>
-                    {["Home", "Products", "Categories", "Profile"].map((text) => (
+                    {["Home", "Products", "Categories"].map((text) => (
                         <ListItem key={text}>
                             <ListItemText primary={text} />
                         </ListItem>

@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { removeItem, updateQuantity } from "@/store/cartSlice";
+import { useNavigation } from "@/utils/useNavigation";
 
 const ProductImage = styled(CardMedia)(({ theme }) => ({
   height: 120,
@@ -41,7 +42,8 @@ const CartItemCard = styled(Card)(({ theme }) => ({
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-
+  const { navigateToCheckout } = useNavigation();
+  
   const handleQuantityChange = (id: number, action: string) => {
     const item = cartItems.find(item => item.id === id);
     if (item) {
@@ -140,6 +142,7 @@ const CartPage = () => {
                 size="large" 
                 fullWidth
                 disabled={cartItems.length === 0}
+                onClick={navigateToCheckout}
               >
                 Proceed to Checkout
               </Button>

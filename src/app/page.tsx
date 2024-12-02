@@ -71,7 +71,7 @@ const ScrollButton = styled(IconButton)(() => ({
 }));
 
 const HomePage = () => {
-  const { navigateToProducts, navigateToHome, navigateToContacts} = useNavigation();
+  const { navigateToProducts, navigateToHome, navigateToContacts, navigateToCategories, navigateToProfile } = useNavigation();
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.items);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -185,6 +185,16 @@ const HomePage = () => {
                 <ListItem disablePadding>
                   <Link component="button" onClick={navigateToContacts} sx={{ paddingY: 1 }}>
                     Contact
+                  </Link>
+                </ListItem>
+                <ListItem disablePadding>
+                  <Link component="button" onClick={navigateToCategories} sx={{ paddingY: 1 }}>
+                    Categories
+                  </Link>
+                </ListItem>
+                <ListItem disablePadding>
+                  <Link component="button" onClick={navigateToProfile} sx={{ paddingY: 1 }}>
+                    Profile
                   </Link>
                 </ListItem>
               </List>
