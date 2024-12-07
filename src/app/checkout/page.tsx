@@ -50,7 +50,7 @@ const CheckoutPage = () => {
     dispatch(getOrderSummary());
   }, [dispatch]);
 
-  const handlePaymentMethodChange = (event: any) => {
+  const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(event.target.value);
   };
 

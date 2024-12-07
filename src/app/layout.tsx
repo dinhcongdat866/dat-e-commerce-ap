@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "@/styles/globals.css";
 import NavBar from "@/components/NavBar";
 import ReduxProvider from "@/components/ReduxProvider";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -28,10 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ReduxProvider>
-          <NavBar />
-          {children}
-        </ReduxProvider>
+        <SessionProviderWrapper>
+          <ReduxProvider>
+            <NavBar />
+            {children}
+          </ReduxProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

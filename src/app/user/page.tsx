@@ -48,7 +48,7 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   marginBottom: theme.spacing(2)
 }));
 
-const StyledCard = styled(Card)(({ theme }) => ({
+const StyledCard = styled(Card)(() => ({
   cursor: 'pointer',
   transition: 'transform 0.2s ease-in-out',
   '&:hover': {
@@ -71,7 +71,7 @@ const UserProfile = () => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  const openEditAddressDialog = (address: any) => {
+  const openEditAddressDialog = (address: ProfileAddress) => {
     setSelectedAddress(address);
     setOpenEditAddress(true);
   };

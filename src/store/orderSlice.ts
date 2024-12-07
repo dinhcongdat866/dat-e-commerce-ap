@@ -23,6 +23,7 @@ const fetchOrderSummary = async (): Promise<OrderSummary> => {
 };
 
 const fetchVoucher = async (voucher: string): Promise<OrderSummary> => {
+    console.log("voucher", voucher); // TODO: remove after placeholder data is removed
     return new Promise<OrderSummary>((resolve) => {
         setTimeout(() => {
             resolve({
