@@ -149,13 +149,19 @@ const ProductsPage = () => {
                                 <Typography variant="h6" gutterBottom>
                                     Follow Us
                                 </Typography>
-                                <IconButton color="inherit" aria-label="facebook">
+                                <IconButton color="inherit" aria-label="facebook"
+                                    onClick={() => window.open("https://www.facebook.com", "_blank")}
+                                >
                                     <FacebookIcon />
                                 </IconButton>
-                                <IconButton color="inherit" aria-label="twitter">
+                                <IconButton color="inherit" aria-label="twitter"
+                                    onClick={() => window.open("https://www.twitter.com", "_blank")}
+                                >
                                     <TwitterIcon />
                                 </IconButton>
-                                <IconButton color="inherit" aria-label="instagram">
+                                <IconButton color="inherit" aria-label="instagram"
+                                    onClick={() => window.open("https://www.instagram.com", "_blank")}
+                                >
                                     <InstagramIcon />
                                 </IconButton>
                             </Grid>

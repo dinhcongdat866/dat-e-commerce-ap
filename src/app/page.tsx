@@ -204,13 +204,13 @@ const HomePage = () => {
                 Follow Us
               </Typography>
               <Stack direction="row" spacing={2}>
-                <IconButton>
+                <IconButton onClick={() => window.open("https://www.facebook.com", "_blank")}>
                   <FacebookIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => window.open("https://www.twitter.com", "_blank")}>
                   <TwitterIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => window.open("https://www.instagram.com", "_blank")}>
                   <InstagramIcon />
                 </IconButton>
               </Stack>
