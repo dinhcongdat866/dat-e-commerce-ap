@@ -80,19 +80,6 @@ const ProductDetailPage = () => {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-            <AppBar position="sticky">
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        E-Shop
-                    </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={cartItems} color="error">
-                            <ShoppingCartIcon />
-                        </Badge>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-
             <Container sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>

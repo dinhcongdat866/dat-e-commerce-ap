@@ -11,16 +11,12 @@ export const useNavigation = () => {
         router.push('/products');
     }
 
+    const navigateToProductDetails = (id: number) => {
+        router.push(`/products/${id}`);
+    }
+
     const navigateToCart = () => {
         router.push('/cart');
-    }
-
-    const navigateToCategories = () => {
-        router.push('/categories');
-    }
-
-    const navigateToContacts = () => {
-        router.push('/contacts');
     }
 
     const navigateToCheckout = () => {
@@ -35,9 +31,8 @@ export const useNavigation = () => {
         navigateToProducts,
         navigateToCart,
         navigateToHome,
-        navigateToCategories,
-        navigateToContacts,
         navigateToCheckout,
-        navigateToProfile
+        navigateToProfile,
+        navigateToProductDetails
     }
 }

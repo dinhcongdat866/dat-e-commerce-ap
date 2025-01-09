@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   Typography,
   IconButton,
@@ -15,21 +16,20 @@ import {
   Paper,
   List,
   ListItem,
-  Link,
 } from "@mui/material";
-import { styled } from "@mui/system";
-import { 
+import { styled, ThemeProvider } from "@mui/system";
+import {
   ShoppingCart as ShoppingCartIcon,
   Facebook as FacebookIcon,
   Twitter as TwitterIcon,
   Instagram as InstagramIcon,
   ChevronRight as ChevronRightIcon
 } from "@mui/icons-material";
-import { useNavigation } from "@/utils/useNavigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Product } from "@/store/productsSlice";
 import { addItem } from "@/store/cartSlice";
+import theme from "@/styles/theme";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   minWidth: 280,
@@ -65,13 +65,12 @@ const ScrollButton = styled(IconButton)(() => ({
   backgroundColor: "#383838",
   color: "white",
   "&:hover": {
-    backgroundColor: "#fff"
+    backgroundColor: "#000000"
   },
   zIndex: 1000
 }));
 
 const HomePage = () => {
-  const { navigateToProducts, navigateToHome, navigateToContacts, navigateToCategories, navigateToProfile } = useNavigation();
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.items);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -92,136 +91,128 @@ const HomePage = () => {
   const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Box
-        sx={{
-          backgroundImage: `url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "500px",
-          display: "flex",
-          alignItems: "center"
-        }}
-      >
-        <Container>
-          <Paper sx={{ p: 4, maxWidth: 500, backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
-            <Typography variant="h3" gutterBottom>
-              New Season Arrivals
-            </Typography>
-            <Typography variant="h6" sx={{ mb: 3 }}>
-              Check out the latest products with amazing deals
-            </Typography>
-            <Button variant="contained" size="large" onClick={navigateToProducts}>
-              Shop Now
-            </Button>
-          </Paper>
-        </Container>
-      </Box>
-
-      <Container sx={{ my: 8 }}>
-        <Typography variant="h4" gutterBottom>
-          Featured Products
-        </Typography>
-        <Box sx={{ position: "relative" }}>
-          <ScrollContainer>
-            {visibleProducts.map((product) => (
-              <StyledCard key={product.id}>
-                <ProductImage
-                  image={`https://${product.image}`}
-                  title={product.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {product.name}
-                  </Typography>
-                  <Typography variant="h6" color="primary">
-                    ${product.price}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    sx={{ mt: 2 }}
-                    startIcon={<ShoppingCartIcon />}
-                    onClick={() => onAddToCart(product)}
-                  >
-                    Add to Cart
-                  </Button>
-                </CardContent>
-              </StyledCard>
-            ))}
-          </ScrollContainer>
-          <ScrollButton onClick={handleNext}>
-            <ChevronRightIcon />
-          </ScrollButton>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <Box
+          sx={{
+            backgroundImage: `url("https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "500px",
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
+          <Container>
+            <Paper sx={{ p: 4, maxWidth: 500, backgroundColor: "rgba(255, 255, 255, 0.9)" }}>
+              <Typography variant="h3" gutterBottom>
+                New Season Arrivals
+              </Typography>
+              <Typography variant="h6" sx={{ mb: 3 }}>
+                Check out the latest products with amazing deals
+              </Typography>
+              <Link href="/products">
+                Shop Now
+              </Link>
+            </Paper>
+          </Container>
         </Box>
-      </Container>
 
-      <Box sx={{ bgcolor: "background.paper", py: 6, mt: "auto" }}>
-        <Container>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom>
-                About Us
-              </Typography>
-              <Typography variant="body2">
-                We are committed to providing the best shopping experience with top-quality products and excellent customer service.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom>
-                Quick Links
-              </Typography>
-              <List>
-                <ListItem disablePadding>
-                  <Link component="button" onClick={navigateToHome} sx={{ paddingY: 1 }}>
-                    Home
-                  </Link>
-                </ListItem>
-                <ListItem disablePadding>
-                  <Link component="button" onClick={navigateToProducts} sx={{ paddingY: 1 }}>
-                    Products
-                  </Link>
-                </ListItem>
-                <ListItem disablePadding>
-                  <Link component="button" onClick={navigateToContacts} sx={{ paddingY: 1 }}>
-                    Contact
-                  </Link>
-                </ListItem>
-                <ListItem disablePadding>
-                  <Link component="button" onClick={navigateToCategories} sx={{ paddingY: 1 }}>
-                    Categories
-                  </Link>
-                </ListItem>
-                <ListItem disablePadding>
-                  <Link component="button" onClick={navigateToProfile} sx={{ paddingY: 1 }}>
-                    Profile
-                  </Link>
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom>
-                Follow Us
-              </Typography>
-              <Stack direction="row" spacing={2}>
-                <IconButton onClick={() => window.open("https://www.facebook.com", "_blank")}>
-                  <FacebookIcon />
-                </IconButton>
-                <IconButton onClick={() => window.open("https://www.twitter.com", "_blank")}>
-                  <TwitterIcon />
-                </IconButton>
-                <IconButton onClick={() => window.open("https://www.instagram.com", "_blank")}>
-                  <InstagramIcon />
-                </IconButton>
-              </Stack>
-            </Grid>
-          </Grid>
-          <Typography variant="body2" sx={{ mt: 4, textAlign: "center" }}>
-            © 2024 E-Shop. All rights reserved.
+        <Container sx={{ my: 8 }}>
+          <Typography variant="h4" gutterBottom>
+            Featured Products
           </Typography>
+          <Box sx={{ position: "relative" }}>
+            <ScrollContainer>
+              {visibleProducts.map((product) => (
+                <StyledCard key={product.id}>
+                  <ProductImage
+                    image={`https://${product.image}`}
+                    title={product.name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {product.name}
+                    </Typography>
+                    <Typography variant="h6" color="primary">
+                      ${product.price}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                      startIcon={<ShoppingCartIcon />}
+                      onClick={() => onAddToCart(product)}
+                    >
+                      Add to Cart
+                    </Button>
+                  </CardContent>
+                </StyledCard>
+              ))}
+            </ScrollContainer>
+            <ScrollButton onClick={handleNext}>
+              <ChevronRightIcon />
+            </ScrollButton>
+          </Box>
         </Container>
+
+        <Box sx={{ bgcolor: "background.paper", py: 6, mt: "auto" }}>
+          <Container>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" gutterBottom>
+                  About Us
+                </Typography>
+                <Typography variant="body2">
+                  We are committed to providing the best shopping experience with top-quality products and excellent customer service.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" gutterBottom>
+                  Quick Links
+                </Typography>
+                <List>
+                  <ListItem disablePadding>
+                    <Link href="/">
+                      Home
+                    </Link>
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <Link href="/products">
+                     Products
+                    </Link>
+                  </ListItem>
+                  <ListItem disablePadding>
+                    <Link href="/profile">
+                     Profile
+                    </Link>
+                  </ListItem>
+                </List>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" gutterBottom>
+                  Follow Us
+                </Typography>
+                <Stack direction="row" spacing={2}>
+                  <IconButton onClick={() => window.open("https://www.facebook.com", "_blank")}>
+                    <FacebookIcon />
+                  </IconButton>
+                  <IconButton onClick={() => window.open("https://www.twitter.com", "_blank")}>
+                    <TwitterIcon />
+                  </IconButton>
+                  <IconButton onClick={() => window.open("https://www.instagram.com", "_blank")}>
+                    <InstagramIcon />
+                  </IconButton>
+                </Stack>
+              </Grid>
+            </Grid>
+            <Typography variant="body2" sx={{ mt: 4, textAlign: "center" }}>
+              © 2024 E-Shop. All rights reserved.
+            </Typography>
+          </Container>
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 };
 

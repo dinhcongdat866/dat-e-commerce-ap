@@ -36,6 +36,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { getOrderHistory } from "@/store/orderHistorySlice";
 import { getProfile, updateProfileAddress } from "@/store/profileSlice";
+import { useSession } from "next-auth/react";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -65,6 +66,7 @@ const UserProfile = () => {
   const dispatch = useAppDispatch();
   const { orderHistory } = useSelector((state: RootState) => state.orderHistory);
   const { profile } = useSelector((state: RootState) => state.profile);
+  const { data: session } = useSession();
 
   useEffect(() => {
     dispatch(getOrderHistory());
@@ -90,7 +92,7 @@ const UserProfile = () => {
           <StyledPaper>
             <Box display="flex" flexDirection="column" alignItems="center">
               <ProfileAvatar src={`https://${profile?.image}`} alt={profile?.name}>
-                <PersonIcon />
+                {session?.user?.image ? <Avatar src={session.user.image} /> : <PersonIcon />}
               </ProfileAvatar>
               <Typography variant="h5" gutterBottom>
                 {profile?.name}

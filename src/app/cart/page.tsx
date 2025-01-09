@@ -15,15 +15,15 @@ import {
   Paper
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { 
-    Remove as RemoveIcon, 
-    Add as AddIcon, 
-    Delete as DeleteIcon 
+import {
+  Remove as RemoveIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { removeItem, updateQuantity } from "@/store/cartSlice";
-import { useNavigation } from "@/utils/useNavigation";
+import Link from "next/link";
 
 const ProductImage = styled(CardMedia)(({ theme }) => ({
   height: 120,
@@ -42,8 +42,7 @@ const CartItemCard = styled(Card)(({ theme }) => ({
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-  const { navigateToCheckout } = useNavigation();
-  
+
   const handleQuantityChange = (id: number, action: string) => {
     const item = cartItems.find(item => item.id === id);
     if (item) {
@@ -80,7 +79,7 @@ const CartPage = () => {
                     ${item.price.toFixed(2)}
                   </Typography>
                   <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
-                    <IconButton 
+                    <IconButton
                       onClick={() => handleQuantityChange(item.id, "decrease")}
                       size="small"
                     >
@@ -92,7 +91,7 @@ const CartPage = () => {
                       sx={{ width: "60px", mx: 1 }}
                       size="small"
                     />
-                    <IconButton 
+                    <IconButton
                       onClick={() => handleQuantityChange(item.id, "increase")}
                       size="small"
                     >
@@ -100,7 +99,7 @@ const CartPage = () => {
                     </IconButton>
                   </Box>
                 </Box>
-                <IconButton 
+                <IconButton
                   onClick={() => handleRemoveItem(item.id)}
                   color="error"
                   sx={{ ml: 2 }}
@@ -117,19 +116,19 @@ const CartPage = () => {
                 Order Summary
               </Typography>
               <Divider sx={{ my: 2 }} />
-              
+
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
                 <Typography>Subtotal:</Typography>
                 <Typography>${calculateTotal().toFixed(2)}</Typography>
               </Box>
-              
+
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
                 <Typography>Shipping:</Typography>
                 <Typography>Free</Typography>
               </Box>
-              
+
               <Divider sx={{ my: 2 }} />
-              
+
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                 <Typography variant="h6">Total:</Typography>
                 <Typography variant="h6" color="primary">
@@ -137,15 +136,16 @@ const CartPage = () => {
                 </Typography>
               </Box>
 
-              <Button 
-                variant="contained" 
-                size="large" 
-                fullWidth
-                disabled={cartItems.length === 0}
-                onClick={navigateToCheckout}
-              >
-                Proceed to Checkout
-              </Button>
+              <Link href="/checkout" passHref>
+                <Button
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  disabled={cartItems.length === 0}
+                >
+                  Proceed to Checkout
+                </Button>
+              </Link>
             </Paper>
           </Grid>
         </Grid>

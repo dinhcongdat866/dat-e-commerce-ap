@@ -9,7 +9,6 @@ export interface OrderHistory {
 
 const fetchOrderHistory = async (): Promise<OrderHistory[]> => {
     return new Promise<OrderHistory[]>((resolve) => {
-        setTimeout(() => {
             resolve([
                 {
                     id: "#ORD001",
@@ -18,7 +17,6 @@ const fetchOrderHistory = async (): Promise<OrderHistory[]> => {
                     status: "Delivered"
                 }
             ]);
-        }, 1000);
     });
 };
 

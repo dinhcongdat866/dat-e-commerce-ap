@@ -13,10 +13,10 @@ import {
     Button,
     useTheme,
     Box,
-    Menu,
-    MenuItem,
-    Fade,
-    ThemeProvider
+    ThemeProvider,
+    Snackbar,
+    Alert,
+    Slide
 } from "@mui/material";
 import { styled } from "@mui/system";
 import {
@@ -25,7 +25,6 @@ import {
     Twitter as TwitterIcon,
     Instagram as InstagramIcon
 } from "@mui/icons-material";
-import { useNavigation } from "@/utils/useNavigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { Product, toggleFavorite } from "@/store/productsSlice";
@@ -50,15 +49,17 @@ const Footer = styled(Box)(({ theme }) => ({
 }));
 
 const ProductsPage = () => {
-    const { navigateToCart } = useNavigation();
     const theme = useTheme();
     const [cartAnchorEl, setCartAnchorEl] = useState(null);
-
+    const [open, setOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
     const products = useSelector((state: RootState) => state.products.items);
     const dispatch = useDispatch();
 
     const handleAddToCart = (product: Product) => {
         dispatch(addItem(product));
+        setSnackbarMessage(`${product.name} added to cart!`);
+        setOpen(true);
     };
 
     const handleAddToFavorites = (product: Product) => {
@@ -69,25 +70,16 @@ const ProductsPage = () => {
         setCartAnchorEl(null);
     };
 
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-                <Menu
-                    anchorEl={cartAnchorEl}
-                    open={Boolean(cartAnchorEl)}
-                    onClose={handleCartClose}
-                    TransitionComponent={Fade}
-                >
-                    <MenuItem>Cart Item 1</MenuItem>
-                    <MenuItem>Cart Item 2</MenuItem>
-                    <MenuItem>Cart Item 3</MenuItem>
-                    <MenuItem>
-                        <Button variant="contained" fullWidth onClick={navigateToCart}>
-                            View Cart
-                        </Button>
-                    </MenuItem>
-                </Menu>
-
                 <Container sx={{ mt: 4, mb: 4 }}>
                     <Typography variant="h4" gutterBottom>
                         Featured Products
@@ -111,7 +103,9 @@ const ProductsPage = () => {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" variant="contained" fullWidth onClick={() => handleAddToCart(product)}>
+                                        <Button size="small" variant="contained" fullWidth onClick={() => {
+                                            handleAddToCart(product);
+                                        }}>
                                             Add to Cart
                                         </Button>
                                         <IconButton size="small" aria-label="add to favorites" onClick={() => handleAddToFavorites(product)}>
@@ -123,7 +117,17 @@ const ProductsPage = () => {
                         ))}
                     </Grid>
                 </Container>
-
+                <Snackbar
+                    open={open}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                    TransitionComponent={Slide}
+                >
+                    <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
                 <Footer>
                     <Container>
                         <Grid container spacing={4}>
