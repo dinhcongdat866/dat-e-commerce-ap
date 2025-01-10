@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import {
-    AppBar,
-    Toolbar,
     Typography,
     IconButton,
-    Badge,
     Container,
     Grid,
     Card,
@@ -41,7 +38,6 @@ const ReviewCard = styled(Card)(({ theme }) => ({
 
 const ProductDetailPage = () => {
     const [quantity, setQuantity] = useState(1);
-    const [cartItems] = useState(3);
 
     const product = {
         id: 1,
