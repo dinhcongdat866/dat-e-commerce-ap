@@ -6,9 +6,7 @@ import {
   Container,
   Grid,
   Typography,
-  TextField,
   Button,
-  Paper,
   Divider,
   Card,
   CardContent,
@@ -16,32 +14,27 @@ import {
   List,
   ListItem,
   ListItemText,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Stack,
   Chip,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { 
-    Edit as EditIcon,
-    VpnKey as KeyIcon,
-    ShoppingBag as ShoppingBagIcon, 
-    LocationOn as LocationOnIcon, 
-    Person as PersonIcon 
+import {
+  Edit as EditIcon,
+  VpnKey as KeyIcon,
+  ShoppingBag as ShoppingBagIcon,
+  LocationOn as LocationOnIcon,
+  Person as PersonIcon
 } from "@mui/icons-material";
 import { ProfileAddress } from "@/models/ProfileAddress";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { getOrderHistory } from "@/store/orderHistorySlice";
-import { getProfile, updateProfileAddress } from "@/store/profileSlice";
+import { getProfile, Profile, updateProfile, updateProfileAddress } from "@/store/profileSlice";
 import { useSession } from "next-auth/react";
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  marginBottom: theme.spacing(3)
-}));
+import EditProfileDialog from "@/components/EditProfileDialog";
+import EditAddressDialog from "@/components/EditAddressDialog";
+import ChangePasswordDialog from "@/components/ChangePasswordDialog";
+import { StyledPaper } from "@/components/StyledPaper";
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   width: theme.spacing(12),
@@ -63,6 +56,7 @@ const UserProfile = () => {
   const [openChangePassword, setOpenChangePassword] = useState(false);
   const [openEditAddress, setOpenEditAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<ProfileAddress | null>(null);
+
   const dispatch = useAppDispatch();
   const { orderHistory } = useSelector((state: RootState) => state.orderHistory);
   const { profile } = useSelector((state: RootState) => state.profile);
@@ -78,11 +72,20 @@ const UserProfile = () => {
     setOpenEditAddress(true);
   };
 
-  const onEditAddress = () => {
+  const onSaveProfile = (updatedProfile: Profile) => {
+    dispatch(updateProfile(updatedProfile));
+    setOpenEditProfile(false);
+  };
+
+  const onSaveAddress = () => {
     if (selectedAddress) {
       dispatch(updateProfileAddress(selectedAddress));
     }
     setOpenEditAddress(false);
+  };
+
+  const onSavePassword = () => {
+    setOpenChangePassword(false);
   };
 
   return (
@@ -135,20 +138,20 @@ const UserProfile = () => {
                   <ListItem>
                     <ListItemText
                       primary={
-                        <Box display="flex" justifyContent="space-between" alignItems="center">
-                          <Typography variant="subtitle1">{order.id}</Typography>
+                        <Typography component="div" display="flex" justifyContent="space-between" alignItems="center">
+                          <Typography component="span" variant="subtitle1">{order.id}</Typography>
                           <Chip
                             label={order.status}
                             color={order.status === "Delivered" ? "success" : "primary"}
                             size="small"
                           />
-                        </Box>
+                        </Typography>
                       }
                       secondary={
-                        <Box display="flex" justifyContent="space-between" mt={1}>
-                          <Typography variant="body2">{order.date}</Typography>
-                          <Typography variant="body2">${order.total}</Typography>
-                        </Box>
+                        <Typography component="div" display="flex" justifyContent="space-between" mt={1}>
+                          <Typography component="span" variant="body2">{order.date}</Typography>
+                          <Typography component="span" variant="body2">${order.total}</Typography>
+                        </Typography>
                       }
                     />
                   </ListItem>
@@ -186,112 +189,26 @@ const UserProfile = () => {
         </Grid>
       </Grid>
 
-      <Dialog open={openEditProfile} onClose={() => setOpenEditProfile(false)}>
-        <DialogTitle>Edit Profile</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Full Name" defaultValue={profile?.name} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Email" defaultValue={profile?.email} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Phone" defaultValue={profile?.phone} />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenEditProfile(false)}>Cancel</Button>
-          <Button variant="contained" onClick={() => setOpenEditProfile(false)}>
-            Save Changes
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {profile && 
+      <EditProfileDialog
+        isOpen={openEditProfile}
+        onClose={() => setOpenEditProfile(false)}
+        profile={profile}
+        onSave={onSaveProfile} />
+      }
 
-      <Dialog open={openChangePassword} onClose={() => setOpenChangePassword(false)}>
-        <DialogTitle>Change Password</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Current Password"
-                type="password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="New Password"
-                type="password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Confirm New Password"
-                type="password"
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenChangePassword(false)}>Cancel</Button>
-          <Button variant="contained" onClick={() => setOpenChangePassword(false)}>
-            Update Password
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {selectedAddress && 
+      <EditAddressDialog
+        isOpen={openEditAddress}
+        onClose={() => setOpenEditAddress(false)}
+        address={selectedAddress}
+        onSave={onSaveAddress} />
+      }
 
-      <Dialog open={openEditAddress} onClose={() => setOpenEditAddress(false)}>
-        <DialogTitle>Edit Address</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Address Type"
-                defaultValue={selectedAddress?.type}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Street Address"
-                defaultValue={selectedAddress?.address}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="City"
-                defaultValue={selectedAddress?.city}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                fullWidth
-                label="State"
-                defaultValue={selectedAddress?.state}
-              />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                fullWidth
-                label="ZIP Code"
-                defaultValue={selectedAddress?.zip}
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenEditAddress(false)}>Cancel</Button>
-          <Button variant="contained" onClick={() => onEditAddress()}>
-            Save Address
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ChangePasswordDialog
+        isOpen={openChangePassword}
+        onClose={() => setOpenChangePassword(false)} 
+        onSave={onSavePassword} />
     </Container>
   );
 };

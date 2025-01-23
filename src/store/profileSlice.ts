@@ -50,6 +50,19 @@ const updateAddress = async (address: ProfileAddress): Promise<ProfileAddress> =
     });
 }
 
+const postUpdateProfile = async (profile: Profile): Promise<Profile> => {
+    return new Promise<Profile>((resolve) => {
+        setTimeout(() => {
+            resolve(profile);
+        }, 1000);
+    });
+}
+
+export const updateProfile = createAsyncThunk('profile/updateProfile', async (profile: Profile) => {
+    const response = await postUpdateProfile(profile);
+    return response;
+});
+
 export const getProfile = createAsyncThunk('profile/fetchProfile', async () => {
     const response = await fetchProfile();
     return response;
@@ -87,10 +100,29 @@ const profileSlice = createSlice({
         builder.addCase(updateProfileAddress.fulfilled, (state, action) => {
             state.loading = false;
             if (state.profile) {
-                state.profile.addresses = [...state.profile.addresses, action.payload];
+                const index = state.profile.addresses.findIndex(
+                    (address) => address.id === action.payload.id
+                );
+                if (index !== -1) {
+                    state.profile.addresses[index] = action.payload;
+                } else {
+                    state.profile.addresses = [...state.profile.addresses, action.payload];
+                }
             }
         });
         builder.addCase(updateProfileAddress.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message || null;
+        });
+
+        builder.addCase(updateProfile.fulfilled, (state, action) => {
+            state.loading = false;
+            state.profile = action.payload;
+        });
+        builder.addCase(updateProfile.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateProfile.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message || null;
         });

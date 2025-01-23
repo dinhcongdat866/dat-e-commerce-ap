@@ -6,7 +6,6 @@ import {
   Container,
   Grid,
   Typography,
-  Paper,
   Card,
   CardContent,
   CardMedia,
@@ -17,7 +16,6 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import { styled } from "@mui/system";
 import {
     LocalShipping as LocalShippingIcon, 
     Inventory as InventoryIcon, 
@@ -27,11 +25,7 @@ import { RootState, useAppDispatch } from "@/store";
 import OrderStatus, { OrderStatusSteps } from "@/types/orderStatus";
 import { useParams } from "next/navigation";
 import { getOrderDetails } from "@/store/orderDetailsSlice";
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  marginBottom: theme.spacing(3)
-}));
+import { StyledPaper } from "@/components/StyledPaper";
 
 const OrderDetailsPage = () => {
   const dispatch = useAppDispatch();
