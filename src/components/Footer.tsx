@@ -1,13 +1,15 @@
-"use client";
+import { Box, Container, Typography } from "@mui/material";
 
-import { Box } from "@mui/material";
-import { styled } from "@mui/system";
-
-const Footer = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.primary.main,
-    color: "white",
-    padding: theme.spacing(6, 0),
-    marginTop: "auto"
-}));
+const Footer = () => {
+    return (
+        <Box sx={{ bgcolor: "background.paper", py: 3, mt: "auto" }}>
+            <Container>
+                <Typography variant="body2" align="center" color="text.secondary">
+                    © 2024 E-Shop. All rights reserved.
+                </Typography>
+            </Container>
+        </Box>
+    );
+};
 
 export default Footer;

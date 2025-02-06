@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
 import NavBar from "@/components/NavBar";
-import ReduxProvider from "@/components/context/ReduxProvider";
-import SessionProviderWrapper from "@/components/context/SessionProviderWrapper";
-import { SnackbarProvider } from "@/components/context/SnackBarProvider";
-import CustomThemeProvider from "@/components/context/CustomThemeProvider";
+import {
+  ReduxProvider,
+  SessionProviderWrapper,
+  SnackbarProvider,
+  CustomThemeProvider,
+} from "@/components";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",

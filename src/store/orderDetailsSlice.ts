@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OrderSummary } from "./orderSlice";
-import { Address } from "@/models/Address";
-import { ProductSale } from "@/models/ProductSale";
+import { Address, ProductSale } from "@/models";
 
 interface OrderDetails {
     orderId: string;

@@ -1,15 +1,39 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Button, Badge, Drawer, List, ListItem, ListItemText, Avatar, Autocomplete, debounce, TextField, Divider, Menu, MenuItem } from '@mui/material';
-import { Menu as MenuIcon, ShoppingCart as ShoppingCartIcon, AccountCircle as AccountCircleIcon, ExitToApp } from '@mui/icons-material';
-import { useTheme, useMediaQuery } from '@mui/material';
-import { useNavigation } from '@/utils/useNavigation';
-import { Box, Stack, styled } from '@mui/system';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { useSession } from 'next-auth/react';
+import { 
+    AppBar, 
+    Toolbar, 
+    Typography, 
+    IconButton, 
+    Button, 
+    Badge, 
+    Drawer, 
+    List, 
+    ListItem, 
+    ListItemText, 
+    Avatar, 
+    Autocomplete, 
+    debounce, 
+    TextField, 
+    Divider, 
+    Menu, 
+    MenuItem,
+    useTheme,
+    useMediaQuery
+} from '@mui/material';
+import { Box, Stack, styled } from '@mui/system';
+import { 
+    Menu as MenuIcon, 
+    ShoppingCart as ShoppingCartIcon, 
+    AccountCircle as AccountCircleIcon, 
+    ExitToApp 
+} from '@mui/icons-material';
 import { SearchProductsResponse } from '@/app/api/search/route';
+import { useNavigation } from '@/utils/useNavigation';
+import { RootState } from '@/store';
 
 const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -184,7 +208,6 @@ const NavBar = () => {
                     </Menu>
                 </Toolbar>
             </AppBar>
-
 
             <Drawer
                 anchor="left"

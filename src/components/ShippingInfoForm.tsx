@@ -1,6 +1,16 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { StyledPaper } from "@/components/StyledPaper";
+"use client";
+
 import { useState } from "react";
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { StyledPaper } from "@/components";
 
 const ShippingInfoForm = () => {
   const [firstName, setFirstName] = useState("");

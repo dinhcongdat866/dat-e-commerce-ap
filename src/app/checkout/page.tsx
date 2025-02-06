@@ -1,24 +1,29 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   Box,
   Container,
   Grid,
   Typography,
-  Card,
-  CardContent,
-  Stack,
-  CardMedia,
 } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store";
-import ShippingInfoForm from "@/components/ShippingInfoForm";
-import PaymentMethodForm from "@/components/PaymentMethodForm";
-import { StyledPaper } from "@/components/StyledPaper";
-import OrderSummary from "@/components/OrderSummary";
+import {
+  ShippingInfoForm,
+  PaymentMethodForm,
+  OrderSummary,
+  OrderItems,
+  Footer,
+} from "@/components";
+import { useAppDispatch } from "@/store";
+import { getOrderDetails } from "@/store/orderDetailsSlice";
 
 const CheckoutPage = () => {
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  // TODO: When use API for order details, can make this component as a server component
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getOrderDetails("12"));
+  }, [dispatch]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -28,58 +33,17 @@ const CheckoutPage = () => {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
-            <StyledPaper>
-              <Typography variant="h6" gutterBottom>
-                Order Items
-              </Typography>
-              <Stack spacing={2}>
-                {cartItems.map((item) => (
-                  <Card key={item.id}>
-                    <CardContent>
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={3}>
-                          <CardMedia
-                            component="img"
-                            height="100"
-                            image={`https://${item.image}`}
-                            alt={item.name}
-                            sx={{ objectFit: "contain" }}
-                          />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant="subtitle1">{item.name}</Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Quantity: {item.quantity}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography variant="subtitle1" align="right">
-                            ${item.price.toFixed(2)}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                ))}
-              </Stack>
-            </StyledPaper>
+            <OrderItems isCart={false} />
             <ShippingInfoForm />
             <PaymentMethodForm />
           </Grid>
-
           <Grid item xs={12} md={4}>
-            <OrderSummary />
+            <OrderSummary isCheckout />
           </Grid>
         </Grid>
       </Container>
 
-      <Box sx={{ bgcolor: "background.paper", py: 3, mt: "auto" }}>
-        <Container>
-          <Typography variant="body2" align="center" color="text.secondary">
-            © 2024 E-Shop. All rights reserved.
-          </Typography>
-        </Container>
-      </Box>
+      <Footer />
     </Box>
   );
 };

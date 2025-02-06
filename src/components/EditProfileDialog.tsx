@@ -1,5 +1,15 @@
+"use client";
+
 import React, { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, TextField, Button } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Grid,
+  TextField,
+  Button,
+} from "@mui/material";
 import { Profile } from "@/store/profileSlice";
 
 interface EditProfileDialogProps {

@@ -1,10 +1,21 @@
+"use client";
+
 import { useState } from "react";
-import { Grid, TextField, Box, Radio, FormControlLabel, Stack, Typography, RadioGroup } from "@mui/material";
+import {
+    Grid,
+    TextField,
+    Box,
+    Radio,
+    FormControlLabel,
+    Stack,
+    Typography,
+    RadioGroup,
+} from "@mui/material";
 import {
     CreditCard as CreditCardIcon,
     AccountBalanceWallet as PaypalIcon,
 } from "@mui/icons-material";
-import { StyledPaper } from "@/components/StyledPaper";
+import { StyledPaper } from "@/components";
 
 const PaymentMethodForm = () => {
     const [paymentMethod, setPaymentMethod] = useState("credit-card");

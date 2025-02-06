@@ -4,9 +4,9 @@ import React, { useContext } from "react";
 import { Button } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch } from "react-redux";
+import { SnackbarContext } from "@/components";
 import { addItem } from "@/store/cartSlice";
 import { Product } from "@/store/productsSlice";
-import { SnackbarContext } from "./context/SnackBarProvider";
 
 interface AddToCartButtonProps {
   product: Product;

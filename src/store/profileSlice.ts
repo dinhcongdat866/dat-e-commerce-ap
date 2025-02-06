@@ -1,4 +1,4 @@
-import { ProfileAddress } from "@/models/ProfileAddress";
+import { ProfileAddress } from "@/models";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface Profile {

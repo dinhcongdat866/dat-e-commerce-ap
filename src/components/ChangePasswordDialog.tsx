@@ -1,4 +1,14 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, TextField, Button } from "@mui/material";
+"use client";
+
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Grid,
+    TextField,
+    Button
+} from "@mui/material";
 import { useState } from "react";
 
 interface ChangePasswordDialogProps {

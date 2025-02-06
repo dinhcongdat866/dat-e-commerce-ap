@@ -11,8 +11,7 @@ import FavoriteButton from "@/components/FavoriteButton";
 import AddToCartButton from "@/components/AddToCartButton";
 import FollowUs from "@/components/FollowUs";
 import { Product } from "../api/products/route";
-import ProductCard from "@/components/ProductCard";
-import Footer from "@/components/Footer";
+import { ProductCard, FooterWrapper } from "@/components";
 
 const ProductsPage = async () => {
     const products: Product[] = await fetch("http://localhost:3000/api/products").then((res) => res.json());
@@ -50,7 +49,7 @@ const ProductsPage = async () => {
                     ))}
                 </Grid>
             </Container>
-            <Footer>
+            <FooterWrapper>
                 <Container>
                     <Grid container spacing={4}>
                         <Grid item xs={12} sm={4}>
@@ -83,7 +82,7 @@ const ProductsPage = async () => {
                         © 2024 E-Shop. All rights reserved.
                     </Typography>
                 </Container>
-            </Footer>
+            </FooterWrapper>
         </Box>
     );
 };

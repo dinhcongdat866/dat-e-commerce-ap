@@ -25,16 +25,18 @@ import {
   LocationOn as LocationOnIcon,
   Person as PersonIcon
 } from "@mui/icons-material";
-import { ProfileAddress } from "@/models/ProfileAddress";
+import { ProfileAddress } from "@/models";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store";
 import { getOrderHistory } from "@/store/orderHistorySlice";
 import { getProfile, Profile, updateProfile, updateProfileAddress } from "@/store/profileSlice";
 import { useSession } from "next-auth/react";
-import EditProfileDialog from "@/components/EditProfileDialog";
-import EditAddressDialog from "@/components/EditAddressDialog";
-import ChangePasswordDialog from "@/components/ChangePasswordDialog";
-import { StyledPaper } from "@/components/StyledPaper";
+import {
+  EditProfileDialog,
+  EditAddressDialog,
+  ChangePasswordDialog,
+  StyledPaper,
+} from "@/components";
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   width: theme.spacing(12),
@@ -189,25 +191,25 @@ const UserProfile = () => {
         </Grid>
       </Grid>
 
-      {profile && 
-      <EditProfileDialog
-        isOpen={openEditProfile}
-        onClose={() => setOpenEditProfile(false)}
-        profile={profile}
-        onSave={onSaveProfile} />
+      {profile &&
+        <EditProfileDialog
+          isOpen={openEditProfile}
+          onClose={() => setOpenEditProfile(false)}
+          profile={profile}
+          onSave={onSaveProfile} />
       }
 
-      {selectedAddress && 
-      <EditAddressDialog
-        isOpen={openEditAddress}
-        onClose={() => setOpenEditAddress(false)}
-        address={selectedAddress}
-        onSave={onSaveAddress} />
+      {selectedAddress &&
+        <EditAddressDialog
+          isOpen={openEditAddress}
+          onClose={() => setOpenEditAddress(false)}
+          address={selectedAddress}
+          onSave={onSaveAddress} />
       }
 
       <ChangePasswordDialog
         isOpen={openChangePassword}
-        onClose={() => setOpenChangePassword(false)} 
+        onClose={() => setOpenChangePassword(false)}
         onSave={onSavePassword} />
     </Container>
   );

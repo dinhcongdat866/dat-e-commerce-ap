@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Grid, TextField, Button } from "@mui/material";
-import { ProfileAddress } from "@/models/ProfileAddress";
+import { ProfileAddress } from "@/models";
 
 interface EditAddressDialogProps {
   isOpen: boolean;

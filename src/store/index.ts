@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './cartSlice';
 import productsReducer from './productsSlice';
@@ -5,7 +6,6 @@ import orderReducer from './orderSlice';
 import orderDetailsReducer from './orderDetailsSlice';
 import orderHistoryReducer from './orderHistorySlice';
 import profileReducer from './profileSlice';
-import { useDispatch } from 'react-redux';
 
 const store = configureStore({
   reducer: {

@@ -8,8 +8,7 @@ import {
   List,
   ListItem,
 } from "@mui/material";
-import ScrollList from "@/components/ScrollList";
-import FollowUs from "@/components/FollowUs";
+import { ScrollList, FollowUs, Footer } from "@/components";
 
 const HomePage = async () => {
   const products = await fetch("http://localhost:3000/api/products").then((res) => res.json());
@@ -87,9 +86,7 @@ const HomePage = async () => {
               <FollowUs />
             </Grid>
           </Grid>
-          <Typography variant="body2" sx={{ mt: 4, textAlign: "center" }}>
-            © 2024 E-Shop. All rights reserved.
-          </Typography>
+          <Footer />
         </Container>
       </Box>
     </Box>
